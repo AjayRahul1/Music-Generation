@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Composition</title>
+  <link rel="stylesheet" href="/static/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+  <script src="/static/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <p class="fs-1 text-bg-dark text-center">Generate your own music with your word power!</p>
+  <div class="container">
+    <form method="post" action="/generate-music">
+      <div class="form-floating mb-3">
+        <textarea class="form-control" id="musicPrompt" name="music-prompt" rows="3"></textarea>
+        <label for="music-prompt" class="form-label">Define your music here</label>
+      </div>
+      <button class="btn btn-outline-success" type="button" id="generateMusic" style="width: 100%;">Generate</button>
+    </form>
+  </div>
+</body>
+<script>
+	// Adjust the height of the textarea as the user types
+	document.getElementById('musicPrompt').addEventListener('input', function () {
+		this.style.height = 'auto';
+		this.style.height = (this.scrollHeight) + 'px';
+	});
+</script>
+</html>
