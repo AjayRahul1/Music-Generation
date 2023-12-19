@@ -20,6 +20,14 @@ def conv_to_base64(fig):
   img_data = base64.b64encode(img_stream.read()).decode("utf-8")
   return img_data
 
+def generate_audio(musicPrompt):
+  from transformers import pipeline
+  import scipy
+  synthesiser = pipeline("text-to-audio", "facebook/musicgen-small")
+  max_length = 768 # for 15 seconds (768/51.2 = 15)
+  music = synthesiser(musicPrompt, forward_params={"do_sample": True, "max_length": 256})
+  scipy.io.wavfile.write("musicgen_out.wav", rate=music["sampling_rate"], data=music["audio"])
+
 def plot_waveform():
   import librosa
   # Load the audio file
@@ -38,6 +46,7 @@ def plot_waveform():
 
 @app.post('/generate-music', response_class=HTMLResponse)
 async def generate_music(musicPrompt : str=Form(...)):
+  generate_audio(musicPrompt)
   audio_waveform = plot_waveform()
   html_content = f"""
   <img src="data:image/png;base64,{audio_waveform}" alt="Waveform" style="width: 100%; max-height: min-content;">
