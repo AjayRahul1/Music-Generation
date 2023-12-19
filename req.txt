@@ -1,6 +1,6 @@
+# Using Python 3.10.13 version
 fastapi
 uvicorn
-Jinja2
 python-multipart
 matplotlib==3.7
 # Supports only python >= 3.8 & < 3.12 version and works together with matplotlib 3.7 only
