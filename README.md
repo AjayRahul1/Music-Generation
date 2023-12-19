@@ -1,12 +1,24 @@
 # Music-Generation
 
-## Steps to run the project
+## Steps to Clone, Install, `Run` the project
 
 ### Cloning the project locally
+
+For HTTPS Method,
 
 ```sh
 # Cloning the GitHub Repository
 git clone https://github.com/AjayRahul1/Music-Generation.git
+
+# Going into the directory
+cd Music-Generation/
+```
+
+For SSH Method (Prefer this only if SSH Key was setup on your computer),
+
+```sh
+# Cloning the GitHub Repository
+git clone git@github.com:AjayRahul1/Music-Generation.git
 
 # Going into the directory
 cd Music-Generation/
@@ -17,12 +29,13 @@ cd Music-Generation/
 #### Python Version 3.10 Installation
 
 - For Windows
-  - Go to [Python Official Downloads](https://www.python.org/downloads/) Page
+  - Go to [Python Official Downloads](https://www.python.org/downloads/) Page (or) Click [here](https://www.python.org/ftp/python/3.10.11/python-3.10.11-amd64.exe) to download Python 3.10.11 installer directly.
   - Download 3.10.x version (x can be any number you find there)
-  - Run the installer file
-  - During installation, make sure to select the option `Customize installation`
+  - Run the installer file.
+  - Check tick the `Add python to PATH`.
+  - During installation, make sure to select the option `Customize installation`.
   - Choose a unique installation directory for Python 3.10.x to avoid overwriting your existing Python version 3.x.x installation.
-  - Open PATH Environment Variables and edit PATH variable by adding Python 3.10 version
+  - If Add Python to Path is `not` checked, open PATH Environment Variables and edit PATH variable by adding Python 3.10 version.
 
 - For Linux (Open Terminal)
   - For Ubuntu
@@ -30,15 +43,21 @@ cd Music-Generation/
   - For Fedora
     - ```sudo dnf install python3.10```
 - Verify Python Version
-  - ```python3.10 --version```
+  - ```py -3.10 --version```
 
 #### Creation of Virtual Environment
 
-- For Windows & Linux
+- For Windows
+  - ```py -3.10 -m venv venv```
+- For Linux
   - ```python3.10 -m venv venv```
 - Activating Virtual Environment
-  - Windows (Open Powershell):
+  - Windows
+    - In Windows 10, Open Powershell (or) In Windows 11, Windows Terminal. 
     - ```venv\Scripts\Activate```
+    - If you face any `error` with this command, it's because Microsoft disables Running Scripts by default.
+    - To enable it temporarily, we run following command and try above command again.
+      - ```powershell -ExecutionPolicy bypass```
   - Linux (In Terminal):
     - ```source venv/bin/activate```
 
@@ -53,6 +72,5 @@ cd Music-Generation/
 - ```uvicorn main:app --reload```
 - Open [LocalHost](http://127.0.0.1:8000/) on your computer
 - `Optional`: You can change the port number as per your wish.
-
 - Now the website is at your hands!
 - Go ahead and type your prompt to generate music accordingly.
