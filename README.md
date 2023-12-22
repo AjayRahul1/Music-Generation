@@ -43,13 +43,16 @@ cd Music-Generation/
   - For Fedora
     - ```sudo dnf install python3.10```
 - Verify Python Version
-  - ```py -3.10 --version```
+  - Windows
+    - ```py -3.10 --version```
+  - Linux
+    - ```python3.10 --version```
 
 #### Creation of Virtual Environment
 
-- For Windows
+- Windows
   - ```py -3.10 -m venv venv```
-- For Linux
+- Linux
   - ```python3.10 -m venv venv```
 - Activating Virtual Environment
   - Windows
