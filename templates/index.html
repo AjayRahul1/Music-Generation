@@ -8,8 +8,22 @@
   <link rel="stylesheet" href="/static/bootstrap-5.3.2-dist/css/bootstrap.min.css">
   <script src="/static/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
   <script src="/static/htmx.min.js"></script>
+  <style>
+    .skeleton {
+      opacity: 0.7;
+      background-color: hsl(200, 20%, 70%);
+      animation: skeleton-loading 1s linear infinite alternate;
+    }
+    @keyframes skeleton-loading {
+      0% {
+        background-color: hsl(200, 20%, 70%);
+      }
+      100% {
+        background-color: hsl(200, 20%, 95%);
+      }
+    }
+  </style>
 </head>
-
 <body>
   <p class="fs-2 bg-success-subtle text-center">Generate your own music with your word power!</p>
   <div class="px-3 my-1">
@@ -31,11 +45,12 @@
           </select>
         </div>
         <div class="col-12">
-          <button class="btn btn-outline-success p-2" type="submit" id="generateMusic">Generate</button>
+          <button class="btn btn-outline-success p-2" type="submit" id="generateMusic" onclick="loadingScreen()">Generate</button>
         </div>
       </div>
     </form>
-    <div class="my-1" id="waveformPlay"></div>
+    <div class="my-1" id="waveformPlay">
+    </div>
   </div>
 </body>
 <script>
@@ -44,6 +59,16 @@
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight) + 'px';
   });
+</script>
+<script>
+  function loadingScreen() {
+    var loadingContent = `<div class="my-3">
+      <div class="skeleton my-2 px-4" style="width: 100%; height: 15rem;"></div>
+      <div class="skeleton my-2" style="height: 5rem;"></div>
+      </div>`;
+    var waveformPlay = document.getElementById('waveformPlay');
+    waveformPlay.innerHTML = loadingContent;
+  }
 </script>
 
 </html>

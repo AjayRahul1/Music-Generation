@@ -47,7 +47,7 @@ def plot_waveform():
 @app.post('/generate-music', response_class=HTMLResponse)
 async def generate_music(musicPrompt : str=Form(..., title="musicPrompt"), audioLength : int=Form(...)):
   generate_audio(musicPrompt, audioLength)
-  print("Generating Audio...\nPrompt:", musicPrompt, "\nLength: ", audioLength)
+  print("Generating Audio...\nPrompt:", musicPrompt, "\nLength: ", audioLength, " seconds")
   audio_waveform = plot_waveform()
   html_content = f"""
   <img src="data:image/png;base64,{audio_waveform}" alt="Waveform" style="width: 100%; max-height: min-content;">
