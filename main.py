@@ -48,7 +48,7 @@ def plot_waveform(musicPrompt, audioLength):
 
 @app.post('/generate-music', response_class=HTMLResponse)
 async def generate_music(musicPrompt : str=Form(..., title="musicPrompt"), audioLength : int=Form(...)):
-  # generate_audio(musicPrompt, audioLength)
+  generate_audio(musicPrompt, audioLength)
   print("Generating Audio...\nPrompt:", musicPrompt, "\nLength: ", audioLength, " seconds")
   audio_waveform = plot_waveform(musicPrompt, audioLength)
   html_content = f"""
