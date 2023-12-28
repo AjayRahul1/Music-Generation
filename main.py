@@ -3,6 +3,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
 import matplotlib.pyplot as plt, io, base64
+import librosa
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -28,15 +29,16 @@ def generate_audio(musicPrompt, audioLength):
   music = synthesiser(musicPrompt, forward_params={"do_sample": True, "max_length": max_length})
   scipy.io.wavfile.write("musicgen_out.wav", rate=music["sampling_rate"], data=music["audio"])
 
-def plot_waveform():
-  import librosa
+def plot_waveform(musicPrompt, audioLength):
   # Load the audio file
   file_path = 'musicgen_out.wav'
   y, sr = librosa.load(file_path)
 
   # Generate the waveform plot without axis labels
-  plt.figure(figsize=(10, 2))
-  librosa.display.waveshow(y, sr=sr)
+  plt.figure(figsize=(8, 2), facecolor='green')
+  plt.title(label=musicPrompt + " - " + str(audioLength) + " seconds")
+  plt.tight_layout()
+  librosa.display.waveshow(y, sr=sr, color='k')
 
   # Remove axis labels
   plt.axis('off')
@@ -46,15 +48,15 @@ def plot_waveform():
 
 @app.post('/generate-music', response_class=HTMLResponse)
 async def generate_music(musicPrompt : str=Form(..., title="musicPrompt"), audioLength : int=Form(...)):
-  generate_audio(musicPrompt, audioLength)
+  # generate_audio(musicPrompt, audioLength)
   print("Generating Audio...\nPrompt:", musicPrompt, "\nLength: ", audioLength, " seconds")
-  audio_waveform = plot_waveform()
+  audio_waveform = plot_waveform(musicPrompt, audioLength)
   html_content = f"""
-  <img src="data:image/png;base64,{audio_waveform}" alt="Waveform" style="width: 100%; max-height: min-content;">
+  <img class="rounded" src="data:image/png;base64,{audio_waveform}" alt="Waveform" style="width:100%; max-height: max-content;">
   <audio id="myAudio" src="/audio" preload="auto"></audio>
-  <div class="text-center">
-    <button class="btn btn-outline-success me-1" onclick="playMusic()">Play</button>
-    <a href="/audio" download="{musicPrompt} - MusicGen - Define your sound"><button class="btn btn-outline-success ms-1">Download</button></a>
+  <div class="text-center my-2">
+    <button class="btn btn-success me-1" onclick="playMusic()">Play</button>
+    <a href="/audio" download="{musicPrompt} - MusicGen - Define your sound"><button class="btn btn-success ms-1">Download</button></a>
   </div>
   <script>
     function playMusic() {{

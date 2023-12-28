@@ -32,7 +32,7 @@
         <textarea class="form-control" id="musicPrompt" name="musicPrompt" rows="3" required></textarea>
         <label for="musicPrompt" class="form-label">Define your music here</label>
       </div>
-      <div class="row row-cols-lg-auto g-3 align-items-center">
+      <div class="row row-cols-lg-auto g-3 justify-content-center align-items-center">
         <p class="mb-0">Length of Audio</p>
         <div class="col-12">
           <label class="visually-hidden" for="inlineFormSelectPref">Length of Audio</label>
@@ -45,12 +45,11 @@
           </select>
         </div>
         <div class="col-12">
-          <button class="btn btn-outline-success p-2" type="submit" id="generateMusic" onclick="loadingScreen()">Generate</button>
+          <button class="btn btn-success p-2" type="submit" id="generateMusic" onclick="loadingScreen()">Generate</button>
         </div>
       </div>
     </form>
-    <div class="my-1" id="waveformPlay">
-    </div>
+    <div class="my-3" id="waveformPlay"></div>
   </div>
 </body>
 <script>
@@ -62,9 +61,12 @@
 </script>
 <script>
   function loadingScreen() {
-    var loadingContent = `<div class="my-3">
-      <div class="skeleton my-2 px-4" style="width: 100%; height: 15rem;"></div>
-      <div class="skeleton my-2" style="height: 5rem;"></div>
+    var loadingContent = `<div>
+      <div class="skeleton my-2 rounded" style="width: 100%; height: 15rem;"></div>
+      <div class="d-flex justify-content-center align-items-center my-2">
+        <div class="skeleton p-2 me-2 rounded" style="min-height: min-content;">Play</div>
+        <div class="skeleton p-2 ms-2 rounded" style="min-height: min-content;">Download</div>
+      </div>
       </div>`;
     var waveformPlay = document.getElementById('waveformPlay');
     waveformPlay.innerHTML = loadingContent;
