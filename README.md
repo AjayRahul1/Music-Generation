@@ -1,6 +1,22 @@
-# Music-Generation
+#  𝄞Music-Generation 
 
-## Steps to Clone, Install, `Run` the project
+- Ever had a thought about composing music in your mind with the description you have?
+- Well.. I think you have the solution now in front of you.
+
+---
+
+- Create your music that the world had never listened before. It's personalized and only yours.  
+- You want a ringtone that is only yours? You have the power in your hands right here.
+- You want a intro music for your Podcast? The keyboard is right in front you to ask.
+- You want a clean outro for your YouTube Video? You are just a description of your music away.
+
+---
+
+> Try out the project by following the detailed steps provided in the [`Getting Started`](#-getting-started) section below.
+
+## 📑 Getting Started
+
+Steps to Clone, Install, `Run` the project
 
 ### Cloning the project locally
 
@@ -42,7 +58,9 @@ cd Music-Generation/
     - ```sudo apt install python3.10```
   - For Fedora
     - ```sudo dnf install python3.10```
-- Verify Python Version
+
+#### Verify Python Version after Installation
+
   - Windows
     - ```py -3.10 --version```
   - Linux
@@ -73,7 +91,7 @@ cd Music-Generation/
 ### Run the project on LocalHost
 
 - ```uvicorn main:app --reload```
-- Open [LocalHost](http://127.0.0.1:8000/) on your computer
+- Open [Localhost](http://127.0.0.1:8000/) on your computer
 - `Optional`: You can change the port number as per your wish.
 - Now the website is at your hands!
 - Go ahead and type your prompt to generate music accordingly.
