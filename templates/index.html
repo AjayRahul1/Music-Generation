@@ -5,10 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Music Composition</title>
+  <link rel="icon" type="image/png" href="/static/favicon_treble_clef.png">
   <link rel="stylesheet" href="/static/bootstrap-5.3.2-dist/css/bootstrap.min.css">
   <script src="/static/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
   <script src="/static/htmx.min.js"></script>
   <style>
+    /*
+    Color Palette:
+    - Light Blue to Dark Blue
+      - #C0CFFA
+      - #9ADDAF
+      - #7D8EC4
+      - #6171A9
+      - #4857BE
+      - #334173
+      - #212C58
+      linear-gradient(to right, #C0CFFA, #6171A9, #212C58)
+      repeating-conic-gradient(from 270deg at 50% 0%, #C0CFFA, #6171A9, #212C58)
+      repeating-conic-gradient(from 90deg at 50% 100%, #C0CFFA, #6171A9, #212C58)
+
+    */
     .skeleton {
       opacity: 0.7;
       background-color: hsl(200, 20%, 70%);
@@ -22,22 +38,47 @@
         background-color: hsl(200, 20%, 95%);
       }
     }
+    .selectDropdown{
+      max-width: max-content;
+      color: #C0CFFA;
+      background-image: repeating-conic-gradient(from 90deg at 50% 100%, #C0CFFA, #6171A9, #212C58);
+      border: 1px;
+      outline: 0px;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+    .selectDropdown:hover{
+      opacity: 0.8;
+    }
+    .generateButton {
+      border: 0px;
+      outline: 0px;
+      color: #C0CFFA;
+      background-image: repeating-conic-gradient(from 270deg at 50% 0%, #C0CFFA, #6171A9, #212C58);
+      border-radius: 0.5em;
+      padding: 0.5em;
+    }
+    .generateButton:hover {
+      opacity: 0.8;
+    }
   </style>
 </head>
-<body>
-  <p class="fs-2 bg-success-subtle text-center">Generate your own music with your word power!</p>
-  <div class="px-3 my-1">
+<body style="background-image: linear-gradient(to right, #C0CFFA, #6171A9, #212C58);">
+  <p class="fs-2 text-white text-center"
+    style="background-image: repeating-conic-gradient(from 270deg at 50% 0%, #C0CFFA, #6171A9, #212C58);">
+      Generate your own music with your word power!
+  </p>
+  <div class="px-3 my-1" style="max-width: 1200px; margin: auto;">
     <form hx-post="/generate-music" hx-trigger="submit" hx-target="#waveformPlay">
       <div class="form-floating mb-3">
-        <textarea class="form-control" id="musicPrompt" name="musicPrompt" rows="3" required></textarea>
+        <textarea class="form-control" id="musicPrompt" name="musicPrompt" required></textarea>
         <label for="musicPrompt" class="form-label">Define your music here</label>
       </div>
       <div class="row row-cols-lg-auto g-3 justify-content-center align-items-center">
         <p class="mb-0">Length of Audio</p>
         <div class="col-12">
           <label class="visually-hidden" for="inlineFormSelectPref">Length of Audio</label>
-          <select id="audioLength" name="audioLength" class="form-select" aria-label="Length of Audio"
-            style="max-width: max-content;">
+          <select id="audioLength" name="audioLength" class="selectDropdown" aria-label="Length of Audio">
             <option value="5">5 seconds (takes less time)</option>
             <option value="10">10 seconds</option>
             <option value="15">15 seconds</option>
@@ -45,7 +86,7 @@
           </select>
         </div>
         <div class="col-12">
-          <button class="btn btn-success p-2" type="submit" id="generateMusic" onclick="loadingScreen()">Generate</button>
+          <button class="generateButton" type="submit" id="generateMusic" onclick="loadingScreen()">Generate</button>
         </div>
       </div>
     </form>
