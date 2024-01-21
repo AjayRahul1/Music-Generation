@@ -32,12 +32,21 @@
       repeating-conic-gradient(from 90deg at 50% 100%, #802364, #942874, #581845);
       repeating-conic-gradient(from 270deg at 50% 0%, #802364, #942874, #581845);
     */
+    body {
+      background-image: linear-gradient(to right, #C0CFFA, #6171A9, #212C58);
+    }
+    p {
+      margin-block: 0;
+    }
 
     .skeleton {
       opacity: 0.7;
+      margin-block: 0.5em;
       background-color: hsl(200, 20%, 70%);
       animation: skeleton-loading 0.7s linear infinite alternate;
+      border-radius: 5px;
     }
+    .skeleton.skelButton {padding: 0.5em;}
     @keyframes skeleton-loading {
       0% {
         background-color: hsl(200, 20%, 70%);
@@ -45,6 +54,20 @@
       100% {
         background-color: hsl(200, 20%, 95%);
       }
+    }
+
+    .textArea {
+      color: #C0CFFA;
+      padding: 8px;
+      border: 0px; outline: 0px;
+      background-image: repeating-conic-gradient(from 270deg at 50% 0%, #802364, #942874, #581845);
+      width: 100%;
+      border-radius: 0.5em;
+    }
+    .textArea:focus, .textArea:hover {
+      outline: none;
+      border: 2px solid #C0CFFA;
+      box-shadow: 0 0 16px #212C58;
     }
 
     .selectDropdown{
@@ -56,54 +79,34 @@
       padding: 0.5em;
       border-radius: 0.5em;
     }
-    .selectDropdown:hover{
-      opacity: 0.8;
-    }
+    .selectDropdown:hover{ background-image: repeating-conic-gradient(from 270deg at 50% 0%, #802364, #942874, #581845); }
 
     .generateButton {
       border: 0px;
-      outline: 0px;
       color: #fff;
       background-image: repeating-conic-gradient(from 270deg at 50% 0%, #802364, #942874, #581845);
       padding: 0.5em;
       border-radius: 0.5em;
     }
-    .generateButton:hover {
-      opacity: 0.8;
-    }
-
-    .textArea {
-      color: #C0CFFA;
-      padding: 8px;
-      border: 0px; outline: 0px;
-      background-image: repeating-conic-gradient(from 270deg at 50% 0%, #802364, #942874, #581845);
-      width: 100%; border-radius: 0.5em;
-    }
-    .textArea:focus, .textArea:hover {
-      outline: none;
-      border: 2px solid #C0CFFA;
-      box-shadow: 0 0 16px #212C58;
-    }
+    .generateButton:hover { background-image: repeating-conic-gradient(from 90deg at 50% 100%, #802364, #942874, #581845); }
   </style>
 </head>
-<body style="background-image: linear-gradient(to right, #C0CFFA, #6171A9, #212C58);">
+<body>
   <h2 style="padding: 8px;
-      color: #fff;
-      margin-bottom: 0.5em;
-      background-image: repeating-conic-gradient(from 270deg at 50% 0%, #C0CFFA, #6171A9, #212C58);
-      text-align: center;">
+      color: #C0CFFA; margin-bottom: 0.5em; text-align: center;
+      background-image: repeating-conic-gradient(from 270deg at 50% 0%, #C0CFFA, #6171A9, #212C58);">
       Generate your own music with your word power!
   </h2>
-  <div class="px-3 my-1" style="max-width: 1200px; margin: auto;">
+  <div class="px-3 my-1" style="max-width: 960px; margin: auto;">
     <form hx-post="/generate-music" hx-trigger="submit" hx-target="#waveformPlay">
       <div class="mb-3">
+        <!-- &#10; stands for new line -->
         <label for="myTextArea">Define your music here</label>
-        <textarea class="textArea" placeholder="Your music taste defines you..."></textarea>
+        <textarea class="textArea" placeholder="Your music taste defines you&#10;or maybe your feelings..." aria-placeholder="Your music taste defines you..."></textarea>
       </div>
       <div class="row row-cols-sm-auto g-3 justify-content-center align-items-center w-100">
-        <p class="mb-0">Length of Audio</p>
+        <p>Length of Audio</p>
         <div class="col-12">
-          <label class="visually-hidden" for="inlineFormSelectPref">Length of Audio</label>
           <select id="audioLength" name="audioLength" class="selectDropdown" aria-label="Length of Audio">
             <option value="5">5 seconds (takes less time)</option>
             <option value="10">10 seconds</option>
@@ -132,10 +135,9 @@
 <script>
   function loadingScreen() {
     var loadingContent = `<div>
-      <div class="skeleton my-2 rounded" style="width: 100%; height: 15rem;"></div>
-      <div class="d-flex justify-content-center align-items-center my-2">
-        <div class="skeleton p-2 rounded" style="min-height: min-content; margin-inline-end: 0.5em;">Loading to Play and Download...</div>
-      </div>
+      <div class="skeleton" style="width: 100%; height: 15rem;"></div>
+      <div>
+        <div class="skeleton skelButton" style="text-align: center; min-height: min-content; margin-inline: auto; max-width: fit-content;">We too can't wait to Play ;)</div>
       </div>`;
     var waveformPlay = document.getElementById('waveformPlay');
     waveformPlay.innerHTML = loadingContent;
