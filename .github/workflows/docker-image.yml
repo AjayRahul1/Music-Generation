@@ -15,11 +15,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/music-composition:$(date +%s)
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/music-composition:${{ github.sha }}
 
     - name: Login to Docker
       run: echo "${{ secrets.DOCKER_PWD_TOKEN }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin
       
     - name: Push Docker Image
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/music-composition:$(date +%s)
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/music-composition:${{ github.sha }}
   
