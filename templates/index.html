@@ -32,9 +32,29 @@
       repeating-conic-gradient(from 90deg at 50% 100%, #802364, #942874, #581845);
       repeating-conic-gradient(from 270deg at 50% 0%, #802364, #942874, #581845);
     */
-    body {
-      background-image: linear-gradient(to right, #C0CFFA, #6171A9, #212C58);
+    :root {
+      --blue-l1: #C0CFFA;
+      --blue-l2: #9DADDF;
+      --blue-l3: #7D8EC4;
+      --blue-l4: #6171A9;
+      --blue-l5: #4857BE;
+      --blue-l6: #334173;
+      --blue-l7: #212C58;
+      --blue-linear-gradient: linear-gradient(to right, var(--blue-l1), var(--blue-l4), var(--blue-l7));
+      --blueTopBottomConeGradient: repeating-conic-gradient(from 270deg at 50% 0%, var(--blue-l1), var(--blue-l4), var(--blue-l7));
+
+      --pink-l1: #942874;
+      --pink-l2: #802364;
+      --pink-l3: #581845;
+      --pinkTopBottomConeGradient: repeating-conic-gradient(from 270deg at 50% 0%, var(--pink-l2), var(--pink-l1), var(--pink-l3));
+      --pinkBottomTopConeGradient: repeating-conic-gradient(from 90deg at 50% 100%, var(--pink-l2), var(--pink-l1), var(--pink-l3));
     }
+
+    body {
+      background-image: var(--blue-linear-gradient);
+      min-height: 100vh;
+    }
+
     p {
       margin-block: 0;
     }
@@ -46,67 +66,90 @@
       animation: skeleton-loading 0.7s linear infinite alternate;
       border-radius: 5px;
     }
-    .skeleton.skelButton {padding: 0.5em;}
+
+    .skeleton.skelButton {
+      padding: 0.5em;
+    }
+
     @keyframes skeleton-loading {
       0% {
         background-color: hsl(200, 20%, 70%);
       }
+
       100% {
         background-color: hsl(200, 20%, 95%);
       }
     }
 
     .textArea {
-      color: #C0CFFA;
+      color: var(--blue-l1);
       padding: 8px;
-      border: 0px; outline: 0px;
-      background-image: repeating-conic-gradient(from 270deg at 50% 0%, #802364, #942874, #581845);
+      border: 0px;
+      outline: 0px;
+      background-image: var(--pinkTopBottomConeGradient);
       width: 100%;
       border-radius: 0.5em;
     }
-    .textArea:focus, .textArea:hover {
+
+    .textArea:focus,
+    .textArea:hover {
       outline: none;
-      border: 2px solid #C0CFFA;
-      box-shadow: 0 0 16px #212C58;
+      border: 2px solid var(--blue-l1);
+      box-shadow: 0 0 16px var(--blue-l6);
     }
 
-    .selectDropdown{
+    .selectDropdown {
       max-width: max-content;
       color: #fff;
-      background-image: repeating-conic-gradient(from 90deg at 50% 100%, #802364, #942874, #581845);
+      background-image: var(--pinkBottomTopConeGradient);
       border: 1px;
       outline: 0px;
       padding: 0.5em;
       border-radius: 0.5em;
     }
-    .selectDropdown:hover{ background-image: repeating-conic-gradient(from 270deg at 50% 0%, #802364, #942874, #581845); }
 
-    .generateButton {
+    .selectDropdown:hover {
+      background-image: var(--pinkTopBottomConeGradient);
+    }
+
+    .pinkAnimateBtn {
       border: 0px;
       color: #fff;
-      background-image: repeating-conic-gradient(from 270deg at 50% 0%, #802364, #942874, #581845);
-      padding: 0.5em;
+      background-image: var(--pinkTopBottomConeGradient);
+      padding: 0.5em 1em;
       border-radius: 0.5em;
     }
-    .generateButton:hover { background-image: repeating-conic-gradient(from 90deg at 50% 100%, #802364, #942874, #581845); }
+
+    .pinkAnimateBtn:hover {
+      background-image: var(--pinkBottomTopConeGradient)
+    }
+
+    .blueGradientBtn {
+      border: 0px;
+      color: #fff;
+      background-color: var(--blue-l7);
+      padding: 0.5em 1em;
+      border-radius: 0.5em;
+    }
   </style>
 </head>
+
 <body>
-  <h2 style="padding: 8px;
-      color: #C0CFFA; margin-bottom: 0.5em; text-align: center;
-      background-image: repeating-conic-gradient(from 270deg at 50% 0%, #C0CFFA, #6171A9, #212C58);">
-      Generate your own music with your word power!
-  </h2>
-  <div class="px-3 my-1" style="max-width: 960px; margin: auto;">
+  <h2
+    style="padding: 8px; color: var(--blue-l1); margin-bottom: 0.5em; text-align: center; background-image: var(--blueTopBottomConeGradient)">
+    Generate your own music with your word power!</h2>
+  <div class="px-3 my-1" style="max-width: 960px; margin-inline: auto;">
     <form hx-post="/generate-music" hx-trigger="submit" hx-target="#waveformPlay">
       <div class="mb-3">
         <!-- &#10; stands for new line -->
-        <label for="myTextArea">Define your music here</label>
-        <textarea class="textArea" id="musicPrompt" name="musicPrompt" placeholder="Your music taste defines you&#10;or maybe your feelings..." aria-placeholder="Your music taste defines you..." required></textarea>
+        <label for="musicPrompt">Define your music here</label>
+        <textarea class="textArea" id="musicPrompt" name="musicPrompt"
+          placeholder="Your music taste defines you&#10;or maybe your feelings..."
+          aria-placeholder="Your music taste defines you..." required></textarea>
       </div>
       <div class="row row-cols-sm-auto g-3 justify-content-center align-items-center w-100">
-        <p>Length of Audio</p>
         <div class="col-12">
+          <label for="audioLength">Length of Audio</label>
           <select id="audioLength" name="audioLength" class="selectDropdown" aria-label="Length of Audio">
             <option value="5">5 seconds (takes less time)</option>
             <option value="10">10 seconds</option>
@@ -115,7 +158,7 @@
           </select>
         </div>
         <div class="col-12">
-          <button class="generateButton" type="submit" id="generateMusic" onclick="loadingScreen()">Generate</button>
+          <button class="pinkAnimateBtn" type="submit" id="generateMusic" onclick="loadingScreen()">Generate</button>
         </div>
       </div>
     </form>
@@ -125,22 +168,28 @@
 <script>
   // Adjust the height of the textarea as the user types
   var textAreas = document.querySelectorAll('.textArea');
-  textAreas.forEach(function(textArea) {
+  textAreas.forEach(function (textArea) {
     textArea.addEventListener('input', function() {
       this.style.height = 'auto';
-      this.style.height = (this.scrollHeight) + 'px';
+      this.style.height = ((this.scrollHeight) + 4) + 'px';
     });
   });
 </script>
 <script>
   function loadingScreen() {
-    var loadingContent = `<div>
-      <div class="skeleton" style="width: 100%; height: 15rem;"></div>
-      <div>
-        <div class="skeleton skelButton" style="text-align: center; min-height: min-content; margin-inline: auto; max-width: fit-content;">We too can't wait to Play ;)</div>
-      </div>`;
-    var waveformPlay = document.getElementById('waveformPlay');
-    waveformPlay.innerHTML = loadingContent;
+    let promptText = document.getElementById("musicPrompt").value;
+    if (promptText != "") {
+      var waveformPlay = document.getElementById('waveformPlay');
+      var loadingContent = `<div>
+        <div class="skeleton" style="width: 100%; height: 15rem;"></div>
+        <div>
+          <div class="skeleton skelButton" style="text-align: center; min-height: min-content; margin-inline: auto; max-width: fit-content;">We too can't wait to Play ;)</div>
+        </div>`;
+      waveformPlay.innerHTML = loadingContent;
+    }
+    else {
+      console.log("Doesn't work! Required field Music Prompt left empty.");
+    }
   }
 </script>
 
