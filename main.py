@@ -4,7 +4,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
 import matplotlib.pyplot as plt, base64, librosa, scipy
 from io import BytesIO
-from multiprocessing import Pool
 from transformers import pipeline
 
 app = FastAPI()
@@ -97,10 +96,3 @@ async def generate_music(musicPrompt: str=Form(..., title="musicPrompt"), audioL
 async def get_audio_file(audio_filepath: str):
   audio_file_extension = ".wav"
   return FileResponse(audio_filepath+audio_file_extension)
-
-if __name__ == "__main__":
-  from time import perf_counter
-  start = perf_counter()
-  generate_audio_offline("modern 2010s pop track with guitar", 5)
-  time_taken = perf_counter() - start
-  print("Took:", time_taken, "secs")
