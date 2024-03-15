@@ -4,7 +4,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
 import matplotlib.pyplot as plt, base64, librosa, scipy
 from io import BytesIO
-from multiprocessing import Pool
 from transformers import pipeline
 
 app = FastAPI()
@@ -69,7 +68,11 @@ def plot_waveform(musicPrompt: str, audioLength: int) -> str:
 @app.post('/generate-music', response_class=HTMLResponse)
 async def generate_music(musicPrompt: str=Form(..., title="musicPrompt"), audioLength: int=Form(...)):
   print("Generating Audio...\nPrompt:", musicPrompt, "\nLength:", audioLength, "seconds")
-  generate_audio_offline(musicPrompt, audioLength)
+  from os.path import isdir
+  if isdir('musicgen-small'):
+    generate_audio_offline(musicPrompt, audioLength)
+  else:
+    generate_audio(musicPrompt, audioLength)
   audio_waveform_img = plot_waveform(musicPrompt, audioLength)
   audio_filepath="musicgen_out"
   html_content = f"""
@@ -97,10 +100,3 @@ async def generate_music(musicPrompt: str=Form(..., title="musicPrompt"), audioL
 async def get_audio_file(audio_filepath: str):
   audio_file_extension = ".wav"
   return FileResponse(audio_filepath+audio_file_extension)
-
-if __name__ == "__main__":
-  from time import perf_counter
-  start = perf_counter()
-  generate_audio_offline("modern 2010s pop track with guitar", 5)
-  time_taken = perf_counter() - start
-  print("Took:", time_taken, "secs")
