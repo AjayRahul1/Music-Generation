@@ -5,12 +5,14 @@ from fastapi.responses import HTMLResponse, FileResponse
 import matplotlib.pyplot as plt, base64, librosa, scipy
 from io import BytesIO
 from transformers import pipeline
+from os.path import isdir
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-from models.model import model, tokenizer, frame_rate, sampling_rate
+if isdir('musicgen-small'):
+  from models.model import model, tokenizer, frame_rate, sampling_rate
 
 @app.get('/', response_class=HTMLResponse)
 async def home(request: Request):
@@ -68,7 +70,6 @@ def plot_waveform(musicPrompt: str, audioLength: int) -> str:
 @app.post('/generate-music', response_class=HTMLResponse)
 async def generate_music(musicPrompt: str=Form(..., title="musicPrompt"), audioLength: int=Form(...)):
   print("Generating Audio...\nPrompt:", musicPrompt, "\nLength:", audioLength, "seconds")
-  from os.path import isdir
   if isdir('musicgen-small'):
     generate_audio_offline(musicPrompt, audioLength)
   else:
