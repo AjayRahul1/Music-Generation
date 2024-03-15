@@ -68,7 +68,11 @@ def plot_waveform(musicPrompt: str, audioLength: int) -> str:
 @app.post('/generate-music', response_class=HTMLResponse)
 async def generate_music(musicPrompt: str=Form(..., title="musicPrompt"), audioLength: int=Form(...)):
   print("Generating Audio...\nPrompt:", musicPrompt, "\nLength:", audioLength, "seconds")
-  generate_audio_offline(musicPrompt, audioLength)
+  from os.path import isdir
+  if isdir('musicgen-small'):
+    generate_audio_offline(musicPrompt, audioLength)
+  else:
+    generate_audio(musicPrompt, audioLength)
   audio_waveform_img = plot_waveform(musicPrompt, audioLength)
   audio_filepath="musicgen_out"
   html_content = f"""
