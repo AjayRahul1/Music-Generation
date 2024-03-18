@@ -1,6 +1,6 @@
-![Music Compose Logo - Generated on Microsoft Designer with Prompt "Music Compose Text in the middle and a music logo on the left with plain blue blurred background, Picture"](/static/Music_Compose_Logo_2by1.jpg)
+# 𝄞Music-Generation
 
-#  𝄞Music-Generation
+![Music Compose Logo - Generated on Microsoft Designer with Prompt "Music Compose Text in the middle and a music logo on the left with plain blue blurred background, Picture"](/static/Music_Compose_Logo_2by1.jpg)
 
 - Ever had a thought about composing music in your mind with the description you have?
 - Well.. I think you have the solution now in front of you.
@@ -63,10 +63,10 @@ cd Music-Generation/
 
 #### Verify Python Version after Installation
 
-  - Windows
-    - ```py -3.10 --version```
-  - Linux
-    - ```python3.10 --version```
+- Windows
+  - ```py -3.10 --version```
+- Linux
+  - ```python3.10 --version```
 
 #### Creation of Virtual Environment
 
@@ -76,7 +76,7 @@ cd Music-Generation/
   - ```python3.10 -m venv venv```
 - Activating Virtual Environment
   - Windows
-    - In Windows 10, Open Powershell (or) In Windows 11, Windows Terminal. 
+    - In Windows 10, Open Powershell (or) In Windows 11, Windows Terminal.
     - ```venv\Scripts\Activate```
     - If you face any `error` with this command, it's because Microsoft disables Running Scripts by default.
     - To enable it temporarily, we run following command and try above command again.

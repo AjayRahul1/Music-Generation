@@ -16,7 +16,11 @@ if isdir('musicgen-small'):
 
 @app.get('/', response_class=HTMLResponse)
 async def home(request: Request):
-  return templates.TemplateResponse('index.html', context={"request" : request})
+  return templates.TemplateResponse(
+    request=request,
+    name="index.html",
+    context={"message": "Successful"}
+  )
 
 def conv_to_base64(fig: plt) -> str:
   """Converts a plot into image varibale in Base64 Format such that it can displayed on the website.
@@ -100,4 +104,7 @@ async def generate_music(musicPrompt: str=Form(..., title="musicPrompt"), audioL
 @app.get("/audio/{audio_filepath}")
 async def get_audio_file(audio_filepath: str):
   audio_file_extension = ".wav"
-  return FileResponse(audio_filepath+audio_file_extension)
+  return FileResponse(
+    audio_filepath+audio_file_extension,
+    status_code=200
+  )
