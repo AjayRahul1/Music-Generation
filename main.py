@@ -13,13 +13,14 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 if isdir('musicgen-small'):
   from models.model import model, tokenizer, frame_rate, sampling_rate
+else:
+  model = pipeline("text-to-audio", "facebook/musicgen-small")
 
 @app.get('/', response_class=HTMLResponse)
 async def home(request: Request):
   return templates.TemplateResponse(
-    request=request,
     name="index.html",
-    context={"message": "Successful"}
+    context={"request": request,"message": "Successful"}
   )
 
 def conv_to_base64(fig: plt) -> str:
@@ -34,9 +35,9 @@ def conv_to_base64(fig: plt) -> str:
 
 def generate_audio(musicPrompt: str, audioLength: int):
   """Generates the audio for the prompt entered."""
-  synthesiser = pipeline("text-to-audio", "facebook/musicgen-small")
+  global model
   max_length = int(51.2 * audioLength) # for 15 seconds (768/51.2 = 15)
-  music = synthesiser(musicPrompt, forward_params={"do_sample": True, "max_length": max_length})
+  music = model(musicPrompt, forward_params={"do_sample": True, "max_length": max_length})
   scipy.io.wavfile.write("musicgen_out.wav", rate=music["sampling_rate"], data=music["audio"])
 
 def generate_audio_offline(musicPrompt: str, audioLength: int):
