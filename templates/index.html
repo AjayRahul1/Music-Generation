@@ -48,11 +48,41 @@
       --pink-l3: #581845;
       --pinkTopBottomConeGradient: repeating-conic-gradient(from 270deg at 50% 0%, var(--pink-l2), var(--pink-l1), var(--pink-l3));
       --pinkBottomTopConeGradient: repeating-conic-gradient(from 90deg at 50% 100%, var(--pink-l2), var(--pink-l1), var(--pink-l3));
+
+      --nothingLightBG: #E2E2E2;
+      --nothingLightIconBG : #F1F1F1;
+      --nothingTextOnLight: #1b1b1b;
+
+      /* Grape Black, Purple, Slight Dark Violet, Slight Dark Pink, Flesh, Light Cream  */
+      --grapeBlack: #180018;
+      --purple: #2B124C;
+      --slightDarkViolet: #522B5B;
+      --slightDarkPink: #854E6B;
+      --flesh: #DFB6B2;
+      --lightCream: #FBE5D8;
     }
 
-    body {
-      background-image: var(--blue-linear-gradient);
-      min-height: 100vh;
+    html, body {
+      background-color: var(--flesh);
+      min-height: 99vh;
+    }
+
+    .header {
+      margin: 8px;
+      border-radius: 50px;
+      padding: 16px;
+      color: var(--grapeBlack);
+      text-align: center;
+      border-bottom: 1px solid var(--grapeBlack);
+      box-shadow: 0 0 8px var(--slightDarkPink);
+      background: linear-gradient(to bottom, var(--lightCream) 50%, var(--grapeBlack) 50%) top;
+      background-size: 100% 200%;
+      transition: 0.5s ease-out;
+    }
+
+    .header:hover {
+      color: var(--lightCream);
+      background-position: bottom;
     }
 
     p {
@@ -73,55 +103,66 @@
 
     @keyframes skeleton-loading {
       0% {
-        background-color: hsl(200, 20%, 70%);
+        background-color: hsl(328, 26%, 70%);
       }
 
       100% {
-        background-color: hsl(200, 20%, 95%);
+        background-color: hsl(328, 26%, 95%);
       }
     }
 
     .textArea {
-      color: var(--blue-l1);
+      color: var(--lightCream);
       padding: 8px;
-      border: 0px;
-      outline: 0px;
-      background-image: var(--pinkTopBottomConeGradient);
+      border: 0;
+      outline: 0;
+      background-color: var(--slightDarkPink);
       width: 100%;
       border-radius: 0.5em;
+      transition: 0.25s ease-out;
     }
 
     .textArea:focus,
     .textArea:hover {
-      outline: none;
-      border: 2px solid var(--blue-l1);
-      box-shadow: 0 0 16px var(--blue-l6);
+      outline: 1px solid var(--purple);
+      border: 2px solid var(--flesh);
+      box-shadow: 0 0 16px var(--grapeBlack);
     }
 
     .selectDropdown {
-      max-width: max-content;
-      color: #fff;
-      background-image: var(--pinkBottomTopConeGradient);
-      border: 1px;
+      min-width: max-content;
+      color: var(--grapeBlack);
+      border: 2px solid var(--slightDarkViolet);
       outline: 0px;
-      padding: 0.5em;
-      border-radius: 0.5em;
+      padding: 0.8em 0.4em;
+      border-radius: 2em;
+      /* background-color: var(--slightDarkViolet); */
+      /* background-color: var(--flesh); */
+      background: linear-gradient(to left, var(--flesh) 50%, var(--slightDarkViolet) 50%) right;
+      background-size: 200%;
+      transition: 0.5s ease-out;
     }
 
     .selectDropdown:hover {
-      background-image: var(--pinkTopBottomConeGradient);
+      color: var(--lightCream);
+      cursor: pointer;
+      background-position: left;
     }
 
-    .pinkAnimateBtn {
-      border: 0px;
-      color: #fff;
-      background-image: var(--pinkTopBottomConeGradient);
-      padding: 0.5em 1em;
-      border-radius: 0.5em;
+    .animateBtn {
+      border: 2px solid var(--slightDarkViolet);
+      color: var(--grapeBlack);
+      /* background: transparent; */
+      background: linear-gradient(to left, transparent 50%, var(--purple) 50%) right;
+      background-size: 200%;
+      padding: 0.7em 0.9em;
+      border-radius: 2em;
+      transition: 0.5s ease-out;
     }
 
-    .pinkAnimateBtn:hover {
-      background-image: var(--pinkBottomTopConeGradient)
+    .animateBtn:hover {
+      color: var(--lightCream);
+      background-position: left;
     }
 
     .blueGradientBtn {
@@ -131,24 +172,33 @@
       padding: 0.5em 1em;
       border-radius: 0.5em;
     }
+
+    .spin {
+      -webkit-animation: spin-image 4s linear infinite;
+      -moz-animation: spin-image 4s linear infinite;
+      animation: spin-image 4s linear infinite;
+    }
+
+    @keyframes spin-image {
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 
 <body>
-  <h2
-    style="padding: 8px; color: var(--blue-l1); margin-bottom: 0.5em; text-align: center; background-image: var(--blueTopBottomConeGradient)">
+  <h2 class="header">
     Generate your own music with your word power!</h2>
-  <div class="px-3 my-1" style="max-width: 960px; margin-inline: auto;">
+  <div class="my-1" style="margin-inline: auto; padding-inline: 16px;">
     <form hx-post="/generate-music" hx-trigger="submit" hx-target="#waveformPlay">
       <div class="mb-3">
         <!-- &#10; stands for new line -->
         <label for="musicPrompt">Define your music here</label>
         <textarea class="textArea" id="musicPrompt" name="musicPrompt"
           placeholder="Your music taste defines you&#10;or maybe your feelings..."
-          aria-placeholder="Your music taste defines you..." required></textarea>
+          aria-placeholder="Your music taste defines you&#10;or maybe your feelings..." required></textarea>
       </div>
-      <div class="row row-cols-sm-auto g-3 justify-content-center align-items-center w-100">
-        <div class="col-12">
+      <div class="row row-cols-sm-auto g-3 justify-content-center align-items-center">
+        <div class="col-12" style="border-radius: 2em; background-color: var(--slightDarkPink); padding: 0 0 0 1em; color: var(--lightCream);">
           <label for="audioLength">Length of Audio</label>
           <select id="audioLength" name="audioLength" class="selectDropdown" aria-label="Length of Audio">
             <option value="5">5 seconds (takes less time)</option>
@@ -157,8 +207,8 @@
             <option value="30">30 seconds (takes more time)</option>
           </select>
         </div>
-        <div class="col-12">
-          <button class="pinkAnimateBtn" type="submit" id="generateMusic" onclick="loadingScreen()">Generate</button>
+        <div>
+          <button class="animateBtn" type="submit" id="generateMusic" onclick="loadingScreen()">Generate</button>
         </div>
       </div>
     </form>
@@ -180,10 +230,12 @@
     let promptText = document.getElementById("musicPrompt").value;
     if (promptText != "") {
       var waveformPlay = document.getElementById('waveformPlay');
-      var loadingContent = `<div>
-        <div class="skeleton" style="width: 100%; height: 15rem;"></div>
+      var loadingContent = `<div style="display: flex; flex-direction: column; align-items: center;">
+        <div class="skeleton" style="padding:2em; height: auto; border-radius: 100%; width: max-content; display:flex; justify-content: center; align-items:center;" >
+          <img class="spin" src="/static/jerry_listening.gif" style="width: 15rem; height: 15rem; border-radius: 100%; object-fit: cover;" />
+        </div>
         <div>
-          <div class="skeleton skelButton" style="text-align: center; min-height: min-content; margin-inline: auto; max-width: fit-content;">We too can't wait to Play ;)</div>
+          <div class="skeleton skelButton" style="min-height: min-content; margin-inline: auto; max-width: fit-content;">We too can't wait to Play ;)</div>
         </div>`;
       waveformPlay.innerHTML = loadingContent;
     }
