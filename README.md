@@ -1,4 +1,4 @@
-# 𝄞Music-Generation
+#  𝄞Music-Generation
 
 ![Music Compose Logo - Generated on Microsoft Designer with Prompt "Music Compose Text in the middle and a music logo on the left with plain blue blurred background, Picture"](/static/Music_Compose_Logo_2by1.jpg)
 
@@ -87,7 +87,7 @@ cd Music-Generation/
 #### Installing Requirements
 
 - Check whether you can see (venv) in the terminal that gives the sign of successful virtual environment activation
-- ```pip install -r req.txt```
+- ```pip install -r requirements.txt```
 - Take a moment of rest and comeback later while the requirements gets installed.
 
 ### Run the project on LocalHost
