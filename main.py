@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt, base64, librosa, scipy
 from io import BytesIO
 from transformers import pipeline
 from os.path import isdir
+from datetime import datetime
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -33,14 +34,14 @@ def conv_to_base64(fig: plt) -> str:
   img_data = base64.b64encode(img_stream.read()).decode("utf-8")
   return img_data
 
-def generate_audio(musicPrompt: str, audioLength: int):
+def generate_audio(musicPrompt: str, audioLength: int) -> bool:
   """Generates the audio for the prompt entered."""
   global model
   max_length = int(51.2 * audioLength) # for 15 seconds (768/51.2 = 15)
   music = model(musicPrompt, forward_params={"do_sample": True, "max_length": max_length})
   scipy.io.wavfile.write("musicgen_out.wav", rate=music["sampling_rate"], data=music["audio"])
 
-def generate_audio_offline(musicPrompt: str, audioLength: int):
+def generate_audio_offline(musicPrompt: str, audioLength: int) -> bool:
   inputs = tokenizer(
     # text=["modern 2010s pop track with guitar"],
     text=[musicPrompt],
@@ -73,7 +74,7 @@ def plot_waveform(musicPrompt: str, audioLength: int) -> str:
   return audio_waveform
 
 @app.post('/generate-music', response_class=HTMLResponse)
-async def generate_music(musicPrompt: str=Form(..., title="musicPrompt"), audioLength: int=Form(...)):
+async def generate_music(request: Request, musicPrompt: str=Form(..., title="musicPrompt"), audioLength: int=Form(...)):
   print("Generating Audio...\nPrompt:", musicPrompt, "\nLength:", audioLength, "seconds")
   if isdir('musicgen-small'):
     generate_audio_offline(musicPrompt, audioLength)
@@ -81,29 +82,25 @@ async def generate_music(musicPrompt: str=Form(..., title="musicPrompt"), audioL
     generate_audio(musicPrompt, audioLength)
   audio_waveform_img = plot_waveform(musicPrompt, audioLength)
   audio_filepath="musicgen_out"
-  html_content = f"""
-  <img class="rounded" src="data:image/png;base64,{audio_waveform_img}" alt="Waveform" style="width:100%; max-height: max-content;">
-  <audio id="myAudio" src="/audio/{audio_filepath}" preload="auto"></audio>
-  <div class="text-center my-2">
-    <button class="blueGradientBtn me-1" onclick="playMusic()">Play</button>
-    <a href="/audio/{audio_filepath}" download="{musicPrompt} - AudioYours - Define your sound"><button class="blueGradientBtn ms-1">Download</button></a>
-  </div>
-  <script>
-    function playMusic() {{
-      var audio = document.getElementById('myAudio');
-      if (audio.paused) {{
-        audio.play();
-      }} else {{
-        audio.pause();
-      }}
-    }}
-  </script>
-  """
-  return HTMLResponse(content=html_content, status_code=200)
+
+  # Convert the current time to a string
+  timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+
+  return templates.TemplateResponse(
+    "waveform_play_template.html",
+    context={
+      "request": request,
+      "audio_waveform_img": audio_waveform_img,
+      "audio_filepath": audio_filepath,
+      "musicPrompt": musicPrompt,
+      "timestamp": timestamp
+    },
+    status_code=200
+  )
 
 # Endpoint to serve the audio file
 @app.get("/audio/{audio_filepath}")
-async def get_audio_file(audio_filepath: str):
+async def get_audio_file(audio_filepath: str, t: str):
   audio_file_extension = ".wav"
   return FileResponse(
     audio_filepath+audio_file_extension,
