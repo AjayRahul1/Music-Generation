@@ -1,6 +1,6 @@
 #  𝄞Music-Generation
 
-![Music Compose Logo - Generated on Microsoft Designer with Prompt "Music Compose Text in the middle and a music logo on the left with plain blue blurred background, Picture"](/static/Music_Compose_Logo_2by1.jpg)
+![Music Compose Logo - Generated on Microsoft Designer with Prompt "Music Compose Text in the middle and a music logo on the left with plain blue blurred background, Picture"](/static/music_compose_logo_2by1.jpg)
 
 - Ever had a thought about composing music in your mind with the description you have?
 - Well.. I think you have the solution now in front of you.
