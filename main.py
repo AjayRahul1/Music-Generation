@@ -61,10 +61,10 @@ def plot_waveform(musicPrompt: str, audioLength: int) -> str:
   # Create a variable for the plot
   fig, ax = plt.subplots(figsize=(8, 2))
   # Generate the waveform plot without axis labels
-  fig.patch.set_facecolor("#C0CFFA")
+  fig.patch.set_facecolor("#FBE5D8")
   ax.set_title(label=" ".join([musicPrompt, '-', str(audioLength), "seconds"]))
   fig.tight_layout()
-  librosa.display.waveshow(y, sr=sr, color='k', ax=ax)
+  librosa.display.waveshow(y, sr=sr, color='#581845', ax=ax)
   # Remove axis labels
   ax.axis('off')
   # Convert the plot into base64 image
