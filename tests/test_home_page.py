@@ -20,5 +20,8 @@ def test_generate_audio_response():
   assert response.status_code == 200
 
 def test_generate_audio():
-  response = client.get("/audio/musicgen_out")
+  from datetime import datetime
+  timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+  url = f"/audio/musicgen_out?t={timestamp}"
+  response = client.get(url=url)
   assert response.status_code == 200
