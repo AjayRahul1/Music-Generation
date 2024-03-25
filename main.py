@@ -100,9 +100,19 @@ async def generate_music(request: Request, musicPrompt: str=Form(..., title="mus
 
 # Endpoint to serve the audio file
 @app.get("/audio/{audio_filepath}")
-async def get_audio_file(audio_filepath: str, t: str):
+async def get_audio_file(audio_filepath: str, t: str | None = None):
   audio_file_extension = ".wav"
   return FileResponse(
     audio_filepath+audio_file_extension,
     status_code=200
   )
+
+@app.get("/sampleAudio/{audio_filepath}")
+async def play_sample_audio(audio_filepath: str, t: str | None = None):
+  audio_html_code = f"""
+    <!-- Audio Dom Element that plays the audio -->
+    <audio id="myAudio" style="border-radius: 0.5em;" controls autoplay>
+      <source id="audioSource" src="/audio/{audio_filepath}">
+    </audio>
+  """
+  return HTMLResponse(content=audio_html_code, status_code=200)

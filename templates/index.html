@@ -174,13 +174,37 @@
     }
 
     .spin {
-      -webkit-animation: spin-image 4s linear infinite;
       -moz-animation: spin-image 4s linear infinite;
+      -webkit-animation: spin-image 4s linear infinite;
       animation: spin-image 4s linear infinite;
     }
 
     @keyframes spin-image {
       100% { transform: rotate(360deg); }
+    }
+
+    #sampleAudioLinks a {
+      color: var(--grapeBlack);
+      padding-block: 0.5em;
+      cursor: pointer;
+      text-decoration: dotted;
+      text-decoration-line: underline;
+    }
+    
+    #sampleAudioLinks a:active {
+      cursor: pointer;
+      color: var(--grapeBlack);
+      text-decoration: dotted;
+      text-decoration-line: underline;
+    }
+
+    #sampleAudioList li {
+      padding-block: 0.5em;
+    }
+    @media (max-width: 50em) {
+      #audioLength {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -213,6 +237,20 @@
       </div>
     </form>
     <div class="my-3" id="waveformPlay"></div>
+    <div style="display: flex; flex-wrap: wrap;">
+      <div style="display: grid; grid-template-rows: repeat(1fr, 5);" id="sampleAudioLinks">
+        <h3>Sample Generated Audios <span style="font-size: 0.5em;">(Click on them to listen)</span></h3>
+        <ol id="sampleAudioList">
+          <li><a hx-get="/sampleAudio/1" hx-target="#playSampleAudio">Smooth Violin Flowing (5 seconds)</a></li>
+          <li><a hx-get="/sampleAudio/3" hx-target="#playSampleAudio">Pop music with high pitch using beat (5 seconds)</a></li>
+          <li><a hx-get="/sampleAudio/5" hx-target="#playSampleAudio">modern 2010s pop track with guitar (5 seconds)</a></li>
+          <li><a hx-get="/sampleAudio/2" hx-target="#playSampleAudio">Some Piano theme with good flow (10 seconds)</a></li>
+          <li><a hx-get="/sampleAudio/4" hx-target="#playSampleAudio">Pop music with high pitch and beat using electric guitar (10 seconds)</a></li>
+        </ol>
+      </div>
+      <div id="playSampleAudio" style="margin: auto;">
+      </div>
+    </div>
   </div>
 </body>
 <script>
