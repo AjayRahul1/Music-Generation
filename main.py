@@ -86,6 +86,11 @@ async def generate_music(request: Request, musicPrompt: str=Form(..., title="mus
   # Convert the current time to a string
   timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
 
+  # Explanation for Below condition: first splits musicPrompt into a list and stores in shortPrompt.
+  # If shortPrompt length < 3, then we send full prompt. Else we send first 3 letters followed by 2 dots.
+  
+  # download_prompt = " ".join(shortPrompt) if (len(shortPrompt:=musicPrompt.split()) < 3) else ((" ".join(shortPrompt[:3])) + "..")
+  # print("Download Prompt is", download_prompt)
   return templates.TemplateResponse(
     "waveform_play_template.html",
     context={
@@ -93,7 +98,8 @@ async def generate_music(request: Request, musicPrompt: str=Form(..., title="mus
       "audio_waveform_img": audio_waveform_img,
       "audio_filepath": audio_filepath,
       "musicPrompt": musicPrompt,
-      "timestamp": timestamp
+      "timestamp": timestamp,
+      "audioLength": audioLength
     },
     status_code=200
   )

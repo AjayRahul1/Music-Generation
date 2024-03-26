@@ -33,25 +33,7 @@
       repeating-conic-gradient(from 270deg at 50% 0%, #802364, #942874, #581845);
     */
     :root {
-      --blue-l1: #C0CFFA;
-      --blue-l2: #9DADDF;
-      --blue-l3: #7D8EC4;
-      --blue-l4: #6171A9;
-      --blue-l5: #4857BE;
-      --blue-l6: #334173;
       --blue-l7: #212C58;
-      --blue-linear-gradient: linear-gradient(to right, var(--blue-l1), var(--blue-l4), var(--blue-l7));
-      --blueTopBottomConeGradient: repeating-conic-gradient(from 270deg at 50% 0%, var(--blue-l1), var(--blue-l4), var(--blue-l7));
-
-      --pink-l1: #942874;
-      --pink-l2: #802364;
-      --pink-l3: #581845;
-      --pinkTopBottomConeGradient: repeating-conic-gradient(from 270deg at 50% 0%, var(--pink-l2), var(--pink-l1), var(--pink-l3));
-      --pinkBottomTopConeGradient: repeating-conic-gradient(from 90deg at 50% 100%, var(--pink-l2), var(--pink-l1), var(--pink-l3));
-
-      --nothingLightBG: #E2E2E2;
-      --nothingLightIconBG : #F1F1F1;
-      --nothingTextOnLight: #1b1b1b;
 
       /* Grape Black, Purple, Slight Dark Violet, Slight Dark Pink, Flesh, Light Cream  */
       --grapeBlack: #180018;
@@ -206,6 +188,10 @@
         width: 100%;
       }
     }
+    #cd-loading {
+      content: url(/static/cd-image.jpg);
+      image-rendering: optimizeSpeed;
+    }
   </style>
 </head>
 
@@ -270,7 +256,7 @@
       var waveformPlay = document.getElementById('waveformPlay');
       var loadingContent = `<div style="display: flex; flex-direction: column; align-items: center;">
         <div class="skeleton" style="padding: 2em; height: auto; border-radius: 100%; width: max-content; display:flex; justify-content: center; align-items:center;">
-          <img class="spin" src="/static/cd-image.webp" style="width: 15em; height: 15em; border-radius: 100%; object-fit: cover;">
+          <img class="spin" id="cd-loading" style="width: 15em; height: 15em; border-radius: 100%; object-fit: cover;">
         </div>
         <div>
           <div class="skeleton skelButton" style="min-height: min-content; margin-inline: auto; max-width: fit-content;">Generating audio...</div>
